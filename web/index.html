@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f7">
+  <title>S3 · 网页键盘</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1c2534;background:#f4f5f7;font-synthesis:none;--muted:#667085;--line:#e5e8ee;--accent:#345ce5}
+    *{box-sizing:border-box}body{margin:0}main{max-width:920px;margin:0 auto;padding:42px 22px 30px}header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:14px}.logo{display:grid;place-items:center;background:#1c2534;color:white;width:48px;height:48px;border-radius:15px;font-size:19px;font-weight:750}h1{font-size:24px;letter-spacing:-.6px;margin:0 0 5px}.subtitle{font-size:13px;color:var(--muted);margin:0}.badge{font-size:12px;white-space:nowrap;background:#e9edf4;border-radius:30px;padding:8px 12px;color:#596477}.badge.ready{background:#e5f5ed;color:#21724c}.badge.offline{background:#fceceb;color:#ad3c32}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:7px}
+    .connection{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px;color:var(--muted);font-size:12px}.connection span{padding:6px 10px;background:white;border:1px solid var(--line);border-radius:7px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:0 3px 12px #1c253403;margin-bottom:18px}.card-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}h2{font-size:15px;margin:0;font-weight:650}.eyebrow{color:var(--muted);font-size:12px}.field-label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}textarea{width:100%;resize:vertical;min-height:220px;border:1px solid #d9dfe9;border-radius:11px;background:#fcfcfe;padding:16px;font:15px/1.8 system-ui,sans-serif;color:#27344b;outline:none}textarea:focus,select:focus,input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #345ce513}textarea::placeholder{color:#9aa3b2}.editor-footer{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted);margin-top:8px}.over{color:#bd3e32}.settings{display:grid;grid-template-columns:1.1fr 1.8fr 1fr 1fr;gap:14px;margin:24px 0 12px}.settings>div{min-width:0}select,input[type=number]{width:100%;height:41px;border:1px solid #d9dfe9;border-radius:8px;background:white;color:#27344b;padding:0 10px;font:13px system-ui;outline:none}.hint{font-size:12px;line-height:1.8;color:var(--muted);margin:0 0 20px}.hint code{font:11px ui-monospace,monospace;background:#f1f3f8;padding:3px 5px;border-radius:4px}.check{display:flex;gap:8px;align-items:center;font-size:12px;color:#4b586d;margin:20px 0}input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px}.actions{display:flex;gap:10px;align-items:center}button{cursor:pointer;font:600 13px system-ui;border:1px solid #dce1eb;border-radius:9px;background:white;color:#44516a;min-height:42px;padding:10px 16px;transition:background .15s}button:hover:not(:disabled){background:#f2f4fb}button:focus-visible{outline:3px solid #a9baff;outline-offset:2px}button:disabled{opacity:.45;cursor:not-allowed}.primary{background:var(--accent);color:white;border-color:var(--accent);min-width:150px}.primary:hover:not(:disabled){background:#284cca}.stop{color:#b1463c}.clear{border-color:transparent;margin-left:auto;font-weight:450}.progress-wrap{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}.progress-label{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);margin-bottom:9px}progress{appearance:none;width:100%;height:5px;border:0;display:block;border-radius:6px;overflow:hidden;background:#edf0f6}progress::-webkit-progress-bar{background:#edf0f6}progress::-webkit-progress-value{background:var(--accent);border-radius:6px}progress::-moz-progress-bar{background:var(--accent)}.keys{display:flex;flex-wrap:wrap;gap:8px}.keys button{min-width:61px;min-height:38px;font:12px ui-monospace,monospace;padding:8px 12px;background:#fafbfe}.notice{background:#fff7e8;color:#856022;border:1px solid #f2dfb7;border-radius:10px;padding:12px 15px;font-size:12px;line-height:1.7;margin-bottom:18px}.notice[hidden]{display:none}#message{font-size:13px;line-height:1.7;border-radius:9px;margin:0 0 18px;padding:11px 14px;background:#edf3ff;color:#3456a0}#message:empty{display:none}#message.error{background:#fff0ee;color:#a93c31}footer{font-size:11px;color:#8a94a4;text-align:center;line-height:1.9;margin-top:24px}.instructions{display:flex;gap:12px;margin:0 0 22px;padding:0;list-style:none}.instructions li{flex:1;font-size:12px;color:var(--muted);line-height:1.7}.step{display:block;font-size:10px;font-weight:700;letter-spacing:1px;color:#9aa6ba;margin-bottom:4px}
+    @media(max-width:600px){main{padding:25px 15px}header{align-items:flex-start;margin-bottom:22px}h1{font-size:20px}.logo{height:42px;width:42px}.brand{gap:10px}.subtitle{font-size:11px}.badge{font-size:10px;padding:7px 9px}.card{padding:19px 16px}.settings{grid-template-columns:1fr 1fr}.settings>div:nth-child(-n+2){grid-column:1/-1}textarea{min-height:210px}.instructions{gap:14px}.instructions li{font-size:11px}.actions{flex-wrap:wrap}.primary{min-width:140px}.editor-footer{font-size:10px}.clear{padding-left:8px;padding-right:8px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="brand"><div class="logo" aria-hidden="true">S3</div><div><h1>网页键盘</h1><p class="subtitle">在这里输入 · 在 USB 设备上呈现</p></div></div>
+    <div class="badge" id="usb-status" role="status"><span class="dot"></span>连接中</div>
+  </header>
+  <div class="connection"><span id="network">正在连接 ESP32-S3…</span><span>USB HID Keyboard</span></div>
+  <ol class="instructions">
+    <li><span class="step">01 / CONNECT</span>原生 USB 连接目标设备</li>
+    <li><span class="step">02 / FOCUS</span>在目标设备上选中输入框</li>
+    <li><span class="step">03 / SEND</span>输入内容，点击发送</li>
+  </ol>
+  <div class="notice" id="caps-warning" hidden>目标设备开启了 Caps Lock，英文字母大小写可能反转。请先关闭 Caps Lock。</div>
+  <div class="notice" id="num-warning" hidden>Windows Unicode 输入使用数字小键盘，请先在目标设备开启 Num Lock。</div>
+  <div id="message" role="alert"></div>
+  <section class="card" aria-labelledby="text-heading">
+    <div class="card-heading"><h2 id="text-heading">输入内容</h2><span class="eyebrow">TEXT → KEYSTROKES</span></div>
+    <label class="field-label" for="text">要发送到目标设备的文字</label>
+    <textarea id="text" placeholder="你好，Linux！&#10;Hello from ESP32-S3." spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+    <div class="editor-footer"><span>换行 → Enter &nbsp;·&nbsp; 制表符 → Tab</span><span id="byte-count">0 / 4096 字节</span></div>
+    <div class="settings">
+      <div><label class="field-label" for="system">目标系统</label><select id="system"><option value="linux">Linux</option><option value="macos">macOS</option><option value="windows">Windows</option></select></div>
+      <div><label class="field-label" for="mode">输入模式</label><select id="mode"><option value="linux_unicode">Linux Unicode · 支持中文</option><option value="us_ascii">美式键盘 · 英文 / 数字 / 符号</option></select></div>
+      <div><label class="field-label" for="interval">按键间隔 / ms</label><input id="interval" type="number" min="10" max="200" step="1" value="25" required></div>
+      <div><label class="field-label" for="delay">开始延时 / 秒</label><input id="delay" type="number" min="0" max="10" step="0.5" value="0" required></div>
+    </div>
+    <p class="hint" id="mode-hint">中文通过 <code>Ctrl+Shift+U</code> 输入。请使用支持此方式的 Linux 应用（如启用 IBus 的文本编辑器），并切换到美式英文键盘布局。</p>
+    <label class="check"><input id="append-enter" type="checkbox">发送完毕后再按一次 Enter</label>
+    <div class="actions"><button class="primary" id="send" disabled>发送到 USB →</button><button class="stop" id="stop" disabled>停止发送</button><button class="clear" id="clear">清空内容</button></div>
+    <div class="progress-wrap"><div class="progress-label"><span id="job-status" role="status" aria-live="polite">等待设备连接</span><span id="job-count">0 / 0</span></div><progress id="progress" max="1" value="0" aria-label="文字发送进度"></progress></div>
+  </section>
+  <section class="card" aria-labelledby="keys-heading">
+    <div class="card-heading"><h2 id="keys-heading">常用按键</h2><span class="eyebrow">点击后立即发送</span></div>
+    <div class="keys" id="keys">
+      <button data-key="ENTER" disabled>Enter</button><button data-key="TAB" disabled>Tab</button><button data-key="ESC" disabled>Esc</button><button data-key="BACKSPACE" disabled>⌫ 退格</button><button data-key="DELETE" disabled>Delete</button><button data-key="HOME" disabled>Home</button><button data-key="END" disabled>End</button>
+      <button data-key="LEFT" aria-label="左方向键" disabled>←</button><button data-key="UP" aria-label="上方向键" disabled>↑</button><button data-key="DOWN" aria-label="下方向键" disabled>↓</button><button data-key="RIGHT" aria-label="右方向键" disabled>→</button>
+      <button data-key="SELECT_ALL" data-edit-letter="A" disabled>Ctrl+A</button><button data-key="COPY" data-edit-letter="C" disabled>Ctrl+C</button><button data-key="PASTE" data-edit-letter="V" disabled>Ctrl+V</button><button data-key="UNDO" data-edit-letter="Z" disabled>Ctrl+Z</button><button data-key="CTRL_ALT_F1" disabled>Ctrl+Alt+F1</button>
+    </div>
+    <p class="hint" id="keys-hint" style="margin:14px 0 0">所有按键都作用于目标设备当前获得焦点的窗口。粘贴使用目标设备自身的剪贴板。</p>
+  </section>
+  <footer>ESP32-S3 · Wi-Fi → USB HID<br>网页可离线使用，输入内容仅在本次发送时暂存于设备内存。</footer>
+</main>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const bytes = new TextEncoder();
+let status = null, online = false, pending = false, latestRequest = 0;
+const names = {idle:'准备就绪',waiting:'即将开始',sending:'正在发送',done:'发送完成',stopped:'已停止发送',error:'发送中断'};
+const systemModes = {
+  linux:[['linux_unicode','Linux Unicode · 支持中文'],['us_ascii','美式键盘 · 英文 / 数字 / 符号']],
+  macos:[['us_ascii','美式键盘 · 英文 / 数字 / 符号'],['macos_unicode','macOS Unicode · 需配置输入源']],
+  windows:[['us_ascii','美式键盘 · 英文 / 数字 / 符号'],['windows_unicode','Windows Unicode · 需配置']]
+};
+const preferences = {system:'linux',modes:{linux:'linux_unicode',macos:'us_ascii',windows:'us_ascii'}};
+try {
+  const saved = JSON.parse(localStorage.getItem('hid-web.preferences'));
+  if (saved && Object.hasOwn(systemModes, saved.system)) preferences.system = saved.system;
+  for (const system of Object.keys(systemModes)) {
+    if (systemModes[system].some(([value]) => value === saved?.modes?.[system])) preferences.modes[system] = saved.modes[system];
+  }
+} catch (_) {}
+function savePreferences() { try { localStorage.setItem('hid-web.preferences', JSON.stringify(preferences)); } catch (_) {} }
+function modeHint() {
+  const hints = {
+    linux_unicode:'中文通过 Ctrl+Shift+U 输入。请使用支持此方式的 Linux 应用（如启用 IBus 的文本编辑器），并切换到美式英文键盘布局。',
+    macos_unicode:'请先在 macOS 添加并选中「Unicode Hex Input（Unicode 十六进制输入）」。中文通过按住 Option 输入，支持 UTF-16 代理对；请关闭 Caps Lock。',
+    windows_unicode:'请先在 Windows 启用 EnableHexNumpad 并重新登录，开启 Num Lock。使用 Alt + 数字小键盘加号输入中文，支持 U+FFFF 以内的字符。',
+    us_ascii:'支持英文、数字、符号、换行和 Tab。目标设备请使用美式英文键盘布局，并关闭 Caps Lock；中文请先配置目标系统的 Unicode 输入。'
+  };
+  $('mode-hint').textContent = hints[$('mode').value];
+}
+function renderSystem() {
+  const system = preferences.system;
+  $('mode').replaceChildren(...systemModes[system].map(([value, label]) => new Option(label, value)));
+  $('mode').value = preferences.modes[system];
+  document.querySelectorAll('[data-edit-letter]').forEach(button => {
+    button.textContent = `${system === 'macos' ? '⌘' : 'Ctrl'}+${button.dataset.editLetter}`;
+  });
+  $('keys-hint').textContent = `所有按键都作用于目标设备当前获得焦点的窗口。粘贴使用目标设备自身的剪贴板。${system === 'macos' ? 'macOS 编辑快捷键使用 Command（⌘）。' : ''}`;
+  modeHint();
+}
+function message(text, error = false) { $('message').textContent = text; $('message').className = error ? 'error' : ''; }
+function update() {
+  const length = bytes.encode($('text').value).length;
+  const limit = status?.max_text_bytes || 4096;
+  $('byte-count').textContent = `${length} / ${limit} 字节`;
+  $('byte-count').classList.toggle('over', length > limit);
+  const available = online && status?.usb_connected && !status.busy && !status.releasing && !pending;
+  $('send').disabled = !available || !length || length > limit;
+  document.querySelectorAll('[data-key]').forEach(button => button.disabled = !available);
+  $('system').disabled = pending || Boolean(status?.busy);
+  $('mode').disabled = pending || Boolean(status?.busy);
+  $('stop').disabled = !online || !status || (!status.busy && !status.releasing);
+  const badge = $('usb-status');
+  badge.className = `badge ${online ? (status?.usb_connected ? 'ready' : '') : 'offline'}`;
+  badge.replaceChildren();
+  const dot = document.createElement('span'); dot.className = 'dot'; badge.append(dot);
+  badge.append(document.createTextNode(!online ? '网页未连接' : status?.usb_connected ? 'USB 已连接' : 'USB 未连接'));
+  $('caps-warning').hidden = !online || !status?.caps_lock;
+  $('num-warning').hidden = !online || $('mode').value !== 'windows_unicode' || status?.num_lock !== false;
+  if (!online) { $('job-status').textContent = '设备连接中断，正在重连…'; return; }
+  $('network').textContent = `${status.ap_ssid} · ${status.wifi_connected ? status.wifi_ip : status.ap_ip}`;
+  let label = names[status.state] || '准备就绪';
+  if (status.releasing) label = '正在释放按键…';
+  else if (!status.usb_connected) label = '请将原生 USB 接口连接到目标设备';
+  else if (status.state === 'waiting') label = `将在 ${(status.delay_remaining_ms / 1000).toFixed(1)} 秒后开始，请选中目标输入框`;
+  else if (status.state === 'error') label = status.error || label;
+  $('job-status').textContent = label;
+  $('job-count').textContent = `${status.completed} / ${status.total}`;
+  $('progress').max = status.total || 1;
+  $('progress').value = status.completed;
+}
+async function refresh() {
+  const request = ++latestRequest;
+  try {
+    const response = await fetch('/api/status', {cache:'no-store', signal:AbortSignal.timeout(4000)});
+    if (!response.ok) throw new Error('无法读取设备状态');
+    const result = await response.json();
+    if (request !== latestRequest) return;
+    status = result; online = true;
+  } catch (_) { if (request === latestRequest) online = false; }
+  update();
+}
+async function post(path, body) {
+  const response = await fetch(path, {method:'POST', headers:{'Content-Type':'application/json','X-HID-Token':status.api_token}, body:JSON.stringify(body), signal:AbortSignal.timeout(5000)});
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.error || '发送失败');
+  return result;
+}
+async function action(path, body) {
+  if (!online || !status || pending) return;
+  pending = true; message(''); update();
+  try { await post(path, body); }
+  catch (error) { message(error.name === 'TimeoutError' ? '请求超时，请查看发送进度后再操作。' : error.message, true); }
+  await refresh(); pending = false; update();
+}
+$('send').addEventListener('click', () => {
+  if (!$('interval').reportValidity() || !$('delay').reportValidity()) return;
+  action('/api/type', {text:$('text').value,system:$('system').value,mode:$('mode').value,interval_ms:Number($('interval').value),start_delay_ms:Math.round(Number($('delay').value)*1000),append_enter:$('append-enter').checked});
+});
+$('stop').addEventListener('click', async () => {
+  if (!online || !status) return;
+  // Stop remains available while a send request is awaiting its HTTP response.
+  try { await post('/api/stop', {}); } catch (error) { message(error.message, true); }
+  await refresh();
+});
+$('keys').addEventListener('click', event => { const button = event.target.closest('[data-key]'); if (button && !button.disabled) action('/api/key', {key:button.dataset.key,system:$('system').value}); });
+$('text').addEventListener('input', () => { message(''); update(); });
+$('clear').addEventListener('click', () => { $('text').value=''; message(''); update(); $('text').focus(); });
+$('system').addEventListener('change', () => { preferences.system=$('system').value; renderSystem(); savePreferences(); message(''); update(); });
+$('mode').addEventListener('change', () => { preferences.modes[$('system').value]=$('mode').value; savePreferences(); modeHint(); message(''); update(); });
+$('system').value=preferences.system;
+renderSystem();
+async function poll() { await refresh(); setTimeout(poll, 750); }
+poll();
+</script>
+</body>
+</html>
